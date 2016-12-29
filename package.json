@@ -4,7 +4,14 @@
   "description": "1. Implement a Pomodoro timer. A pomodoro is a 25-minute unit of work, followed by a five minute break. A ten minute break occurs every four pomodori. 2. Track completed pomodori. 3. Give pomodori tags consisting of a Category, a Project, and a Task. A Category has many Projects, and a Project has many Tasks. 4. List these tags by week, month, and year 5. Graph number of pomodori completed by category over a given week, month, and year. 6. Add pomodori manually with a date, category, project, and task.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:server": "webpack --config webpack.server.config.js",
+    "build:client": "webpack --config webpack.client.config.js",
+    "build": "run-p buildw:*",
+    "buildw:server": "webpack -w --config webpack.server.config.js",
+    "buildw:client": "webpack -w --config webpack.client.config.js",
+    "buildw": "run-p buildw:*",
+    "start": "node private/server.js"
+
   },
   "repository": {
     "type": "git",
@@ -15,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/taylor-smith/pomodoro-project/issues"
   },
-  "homepage": "https://github.com/taylor-smith/pomodoro-project#readme"
+  "homepage": "https://github.com/taylor-smith/pomodoro-project#readme",
+  "devDependencies": {
+    "webpack": "^1.14.0"
+  }
 }
