@@ -6,7 +6,7 @@ const NODE_MODULES_DIR = path.resolve(PROJECT_ROOT, 'node_modules');
 const PUBLIC_DIR = path.resolve(PROJECT_ROOT, 'public');
 const nodeModules = fs.readdirSync(NODE_MODULES_DIR).reduce((result, m) => {
     if (m !== '.bin') {
-        result[m] = 'commonjs' + m;
+        result[m] = 'commonjs ' + m;
     }
     return result;
 }, {});
@@ -25,7 +25,7 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         extensions: ['.ts'],
-        enforeExtensions: false
+        enforceExtension: false
     },
     module: {
         rules: [{
