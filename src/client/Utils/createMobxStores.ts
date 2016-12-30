@@ -1,5 +1,5 @@
 import { Stores } from '../types';
-import Store from '../Store';
+import TimerStore from '../Store/TimerStore';
 
 /**
  * Creates the MobX stores.
@@ -7,6 +7,6 @@ import Store from '../Store';
 
 export default function createMobxStores(): Stores {
     return {
-        store: new Store()
+        timerStore: new TimerStore()
     };
 }

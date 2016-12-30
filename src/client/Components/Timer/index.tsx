@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import Store from '../../Store';
+import Store from '../../Store/TimerStore';
 import { Stores } from '../../types';
-import Clock from './clock';
-import ClockControls from './clockControls';
+import TimerDisplay from './timerDisplay';
+import TimerControls from './timerControls';
 
 interface SelectedStores {
     store?: Store;
@@ -11,16 +11,15 @@ interface SelectedStores {
 
 interface Props extends SelectedStores {}
 
-@inject((stores: Stores): Props => ({store: stores.store}))
+@inject((stores: Stores): Props => ({store: stores.timerStore}))
 @observer
 export default class Timer extends Component<Props, {}> {
     render(): JSX.Element {
         const { store } = this.props;
         return (
             <div>
-                <Clock />
-                <ClockControls />
-
+                <TimerDisplay />
+                <TimerControls />
             </div>
         )
     }

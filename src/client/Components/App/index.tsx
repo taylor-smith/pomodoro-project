@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import Store from '../../Store';
-import { Stores } from '../../types';
+import { observer } from 'mobx-react';
 import Timer from '../Timer';
 
-interface SelectedStores {
-    store?: Store;
-}
-
-interface Props extends SelectedStores {}
-
-@inject((stores: Stores): Props => ({store: stores.store}))
 @observer
-export default class App extends Component<Props, {}> {
+export default class App extends Component<{}, {}> {
     render(): JSX.Element {
-        const { store } = this.props;
         return (
             <div>
                 <Timer />

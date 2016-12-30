@@ -2,7 +2,7 @@ import { observable, action, computed, autorun } from 'mobx';
 
 export default class Store {
     
-    // Clock stuff
+    // timer stuff
     intervalID: number;
 
     @observable millisecondsLeft = 1500000
@@ -29,7 +29,7 @@ export default class Store {
         return this.durationAsDate.getUTCMinutes();
     }
 
-    @computed get clockDisplay () {
+    @computed get timerDisplay () {
         const minutesDisplay = this.minutesRemaining < 10 ? `0${this.minutesRemaining}` : this.minutesRemaining;
         const secondsDisplay = this.secondsRemaining < 10 ? `0${this.secondsRemaining}` : this.secondsRemaining;
         return `${minutesDisplay}:${secondsDisplay}`
@@ -39,12 +39,8 @@ export default class Store {
         this.isTimerRunning = true;
     }
 
-    @action stopTimer = (): void => {
-        this.isTimerRunning = false;
-    }
-
     @action resetTimer = (): void => {
-        this.stopTimer();
+        this.isTimerRunning = false;
         this.millisecondsLeft = 1500000;
     }
 

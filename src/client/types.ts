@@ -1,5 +1,5 @@
-import Store from './Store';
+import TimerStore from './Store/TimerStore';
 
 export interface Stores {
-    store: Store;
+    timerStore: TimerStore;
 }
