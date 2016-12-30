@@ -5,7 +5,13 @@ export default class Store {
     // timer stuff
     intervalID: number;
 
-    @observable millisecondsLeft = 1500000
+    pomodoroLength = 15000;
+    shortBreakLength = 5000;
+    longBreakLength = 10000;
+
+    @observable pomodoroTally = 0;
+
+    @observable millisecondsLeft: number;
 
     @observable isTimerRunning = false;
 
@@ -41,10 +47,15 @@ export default class Store {
 
     @action resetTimer = (): void => {
         this.isTimerRunning = false;
-        this.millisecondsLeft = 1500000;
+        this.millisecondsLeft = this.pomodoroLength;
     }
 
+    @observable isPomodoro = true;
+    @observable isShortBreak = false;
+    @observable isLongBreak = false;
+
     constructor() {
+        this.millisecondsLeft = this.pomodoroLength;
         autorun(() => {
             if (this.isTimerRunning) {
                 this.intervalID = window.setInterval(() => {
@@ -55,6 +66,23 @@ export default class Store {
                 }, 1000);
             } else if (this.intervalID) {
                 window.clearInterval(this.intervalID);
+                if (this.isPomodoro) {
+                    if (this.pomodoroTally === 3) {
+                        this.isPomodoro = false;
+                        this.millisecondsLeft = this.longBreakLength;
+                        this.pomodoroTally = 0;
+                        this.isTimerRunning, this.isLongBreak = true;
+                    } else {
+                        this.isPomodoro = false;
+                        this.millisecondsLeft = this.shortBreakLength;
+                        this.pomodoroTally++;
+                        this.isTimerRunning, this.isShortBreak = true;
+                    }
+                } else {
+                    this.isLongBreak, this.isShortBreak, this.isTimerRunning = false;
+                    this.isPomodoro = true;
+                    this.millisecondsLeft = this.pomodoroLength;
+                }
             }
         });
     }
