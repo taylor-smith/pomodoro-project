@@ -1,3 +1,8 @@
+// const path = require('path');
+// const PROJECT_ROOT = __dirname;
+// const SRC_DIR = path.join(PROJECT_ROOT, client);
+
+
 module.exports = {
     entry: './src/client/index.tsx',
     output: {
@@ -6,6 +11,9 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     resolve: {
+        // alias: {
+        //     '~': SRC_DIR
+        // },
         extensions: ['.js', '.ts', '.tsx'],
         enforceExtension: false
     },
