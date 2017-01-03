@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-// import Store from '../../Store/TimerStore';
+import Store from '../../Store';
 // import { Stores } from '../../types';
 import TimerModel from '../../models/TimerModel';
 
@@ -13,16 +13,16 @@ import TimerModel from '../../models/TimerModel';
 // @inject((stores: Stores): Props => ({store: stores.timerStore}))
 
 @observer
-export default class Timer extends Component<{timer: TimerModel}, {}> {
+export default class Timer extends Component<{store: Store}, {}> {
     constructor(props: any) {
         super(props);
-        console.log(props);
+        // console.log(props);
     }
     render(): JSX.Element {
-        const { timer } = this.props;
+        const { store } = this.props;
         return (
             <div>
-                {timer.timerDisplay}
+                {store.timer.timerDisplay}
             </div>
         )
     }

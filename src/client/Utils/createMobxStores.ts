@@ -1,12 +1,12 @@
-// import { Stores } from '../types';
-// import TimerStore from '../Store/TimerStore';
+import { Stores } from '../types';
+import Store from '../Store';
 
-// /**
-//  * Creates the MobX stores.
-//  */
+/**
+ * Creates the MobX stores.
+ */
 
-// export default function createMobxStores(): Stores {
-//     return {
-//         timerStore: new TimerStore()
-//     };
-// }
+export default function createMobxStores(): Stores {
+    return {
+        store: new Store()
+    };
+}

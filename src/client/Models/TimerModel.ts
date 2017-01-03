@@ -1,5 +1,6 @@
 import { observable, computed, action, autorun, extendObservable } from 'mobx';
-import { ITimer } from '../../common/models';
+import store from '../Store';
+// import { ITimer } from '../../common/models';
 
 export default class TimerModel<> {
     id: string;
@@ -76,6 +77,7 @@ export default class TimerModel<> {
                                 this.pomodoroTally = 0;
                                 this.isTimerRunning = true;
                                 this.millisecondsLeft = 5000;
+                                store.createNewPomodoro();
                                 console.log('long break');
                                 return;
                             } else {
@@ -83,6 +85,7 @@ export default class TimerModel<> {
                                 this.pomodoroTally++;
                                 this.isTimerRunning = true;
                                 this.millisecondsLeft = 2000;
+                                store.createNewPomodoro();
                                 console.log('short break');
                                 return;
                             }

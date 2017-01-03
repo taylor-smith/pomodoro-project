@@ -13,7 +13,7 @@ interface TimerInterface {
 }
 
 interface SelectedStores {
-  store?: Store;
+    store?: Store;
 }
 
 interface Props extends SelectedStores {}
@@ -22,22 +22,27 @@ interface Props extends SelectedStores {}
 @inject((stores: Stores): Props => ({store: stores.store}))
 @observer
 export default class Timer extends Component<Props, {}> {
+    
     timer: TimerModel;
     componentWillMount(): void {
-        this.timer = new TimerModel(
-            uuidV4(),
-            10000,
-            2000,
-            5000
-        )
+        const { store } = this.props;
+        store 
+            ? store.timer = new TimerModel(
+                uuidV4(),
+                10000,
+                2000,
+                5000
+            )
+            : null;
     }
     
     render(): JSX.Element {
-        return (
-            <div>
-                <TimerDisplay timer={this.timer} />
-                <TimerControls timer={this.timer} />
-            </div>
-        )
+        const { store } = this.props;
+        return store 
+            ? (<div>
+                <TimerDisplay store={store} />
+                <TimerControls store={store} />
+            </div>)
+            : (<div></div>);
     }
 }
