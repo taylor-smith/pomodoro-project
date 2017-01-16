@@ -1,7 +1,8 @@
 import { action, observable, computed } from 'mobx';
 import PomodoroModel from '../models/PomodoroModel';
-import uuid from 'uuid';
+import uuid from 'node-uuid';
 import moment from 'moment';
+import 'whatwg-fetch';
 
 
 class Store {
@@ -30,7 +31,6 @@ class Store {
     }
 
     @action startTimer = () => {
-        console.log(this.workingPomodoro);
         if (this.workingPomodoro) {
             this.savePomodoro(this.workingPomodoro);
             this.workingPomodoro = null;
@@ -71,6 +71,14 @@ class Store {
     @action savePomodoro(pomodoro: PomodoroModel) {
         console.log(pomodoro);
         this.pomodoroMap.set(pomodoro.id, pomodoro);
+    }
+
+    @action getPomodoros() {
+        fetch(`${process.env.API_PREFIX}/pomodoros`, {
+            credentials: 'same-origin'
+        })
+        .then(res => res.json())
+        .then(pomodoros => console.log(pomodoros))
     }
 }
 

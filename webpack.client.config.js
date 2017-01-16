@@ -1,7 +1,7 @@
 // const path = require('path');
 // const PROJECT_ROOT = __dirname;
 // const SRC_DIR = path.join(PROJECT_ROOT, client);
-
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/client/index.tsx',
@@ -22,5 +22,10 @@ module.exports = {
             test: /\.tsx?$/,
             use: 'ts-loader'
         }]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.API_PREFIX': JSON.stringify(`${process.env.API_HOST || 'http://localhost:3000/api'}`)
+        })
+    ]
 }
