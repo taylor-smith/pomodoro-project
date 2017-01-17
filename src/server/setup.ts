@@ -18,7 +18,7 @@ async function setup() {
     const sql = new Sql();
     console.log(sql);
     await sql.open(true, true);
-    await sql.run('CREATE TABLE pomodoros (id, category, project, task, tags)');
+    await sql.run('CREATE TABLE pomodoros (id, startTime, endTime, category, project, task, tags)');
     await sql.run('BEGIN TRANSACTION');
     try {
         const pomodoroIds = getRandomPomodoroIds(NUM_POMODOROS);
@@ -40,8 +40,12 @@ async function setup() {
                     project = 'Howard Hughes: His Life and Madness';
                     break;
             }
-            sql.run('INSERT INTO pomodoros VALUES ($id, $category, $project, $task, $tags)', {
+            const startTime = chance.timestamp();
+            const endTime = startTime + (25*60);
+            sql.run('INSERT INTO pomodoros VALUES ($id, $startTime, $endTime, $category, $project, $task, $tags)', {
                 $id: id,
+                $startTime: startTime,
+                $endTime: endTime,
                 $category: category,
                 $project: project,
                 $task: loremIpsum({

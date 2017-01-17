@@ -15,7 +15,7 @@ export default observer(() =>
         }
         {[...store.pomodoroMap.values()].map(pomodoro => 
             <div key={pomodoro.id}>
-                <div>{pomodoro.project}></div>
+                <div>{pomodoro.project}</div>
             </div>
         )}
     </div>

@@ -32,11 +32,6 @@ export default class Sql {
                 return;
             }
             this.db.run(sql, params || {}, err => {
-                // if (err) {
-                //     console.log(err);
-                //     reject(err);
-                // }
-                // resolve();
                 err ? reject(err) : resolve();
             });
         });
@@ -53,23 +48,6 @@ export default class Sql {
             });
         });
     }
-
-    // each(sql: string, params?: {[key: string]: string | number}) {
-    //     return new Promise<any[]>((resolve, reject) => {
-    //         if (this.db === null) {
-    //             reject(new Error('DB is null'));
-    //             return;
-    //         }
-    //         this.db.each(sql, params, (err, row) => {
-    //             if (err) {
-    //                 reject(err);
-    //             } else {
-    //                 console.log(row.id);
-    //                 resolve(row);
-    //             }
-    //         })
-    //     })
-    // }
 
     close() {
         return new Promise((resolve, reject) => {

@@ -20,6 +20,18 @@ app.get('/api/pomodoros', async (req, res) => {
     }
 });
 
+app.post('/api/pomodoro', async (req, res) => {
+    const sql = new Sql();
+    try {
+        await sql.open();
+        
+    } catch (err) {
+        res.status(500).send(JSON.stringify(err));
+    } finally {
+        sql.close();
+    }
+})
+
 app.get('/*', (req, res) => {
     res.send(`
         <!DOCTYPE html>

@@ -1,4 +1,4 @@
-import { action, observable, computed } from 'mobx';
+import { action, observable, computed, runInAction } from 'mobx';
 import PomodoroModel from '../models/PomodoroModel';
 import uuid from 'node-uuid';
 import moment from 'moment';
@@ -69,16 +69,22 @@ class Store {
     }
 
     @action savePomodoro(pomodoro: PomodoroModel) {
-        console.log(pomodoro);
         this.pomodoroMap.set(pomodoro.id, pomodoro);
     }
 
-    @action getPomodoros() {
-        fetch(`${process.env.API_PREFIX}/pomodoros`, {
-            credentials: 'same-origin'
+    @action getPomodoros = async () => {
+        let pomodoros: any = await fetch(`${process.env.API_PREFIX}/pomodoros`).then(res => res.json());
+        runInAction(() => {
+            pomodoros.forEach((pomodoro: any) => this.pomodoroMap.set(pomodoro.id, new PomodoroModel(
+                pomodoro.id,
+                pomodoro.startTime,
+                pomodoro.endTime,
+                pomodoro.category,
+                pomodoro.project,
+                pomodoro.task,
+                pomodoro.tags
+            )));
         })
-        .then(res => res.json())
-        .then(pomodoros => console.log(pomodoros))
     }
 }
 

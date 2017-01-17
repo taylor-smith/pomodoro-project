@@ -4,3 +4,4 @@ export const isString = (x: any) => typeof x === 'string';
 export const isObject = (x: any) => x && x.constructor === Object
 export const isUuid = (x: any) => isString(x) && UUID_RE.test(x);
 export const isArray = (x: any) => Array.isArray(x);
+export const isInteger = (x: any) => Number.isInteger(x);
