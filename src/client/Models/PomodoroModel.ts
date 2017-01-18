@@ -8,8 +8,8 @@ export default class PomodoroModel {
     @observable public tags: string;
     constructor(
         public id: string,
-        public startTime: moment.Moment,
-        public endTime: moment.Moment,
+        public startTime: number,
+        public endTime: number,
         category: string,
         project: string,
         task: string,

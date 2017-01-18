@@ -1,9 +1,14 @@
 import express from 'express';
 import Sql from './sql';
+import bodyParser from 'body-parser';
+import moment from 'moment';
 import * as models from '../common/models';
+import { PomodoroBusiness } from './business/PomodoroBusiness';
 
 const app = express();
 app.use(express.static(process.env.PUBLIC_DIR));
+app.use(bodyParser.json());
+
 
 app.get('/api/pomodoros', async (req, res) => {
     const sql = new Sql();
@@ -21,21 +26,22 @@ app.get('/api/pomodoros', async (req, res) => {
 });
 
 app.post('/api/pomodoro', async (req, res) => {
-    const sql = new Sql();
     try {
-        await sql.open();
-        
-    } catch (err) {
-        res.status(500).send(JSON.stringify(err));
-    } finally {
-        sql.close();
+        const pomodoro: models.IPomodoroModel = <models.IPomodoroModel>req.body;
+        const pomodoroBusiness = new PomodoroBusiness();
+        pomodoroBusiness.create(pomodoro, (error, result) => {
+            error ? res.status(500).send(JSON.stringify(error)) : res.status(201).send(pomodoro);
+        })
+    } catch (e) {
+        console.log(e);
+        res.send({'error': 'error in your request'});
     }
 })
 
 app.get('/*', (req, res) => {
     res.send(`
         <!DOCTYPE html>
-        <title>Fullstack Typescript</title>
+        <title>Pomodoro App</title>
         <div id="app"></div>
         <script src="client.js"></script>
     `)

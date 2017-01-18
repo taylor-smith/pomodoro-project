@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import Timer from '../Timer';
 import store from '../../Store';
 
@@ -16,6 +17,8 @@ export default observer(() =>
         {[...store.pomodoroMap.values()].map(pomodoro => 
             <div key={pomodoro.id}>
                 <div>{pomodoro.project}</div>
+                <div>{pomodoro.startTime.format("LLL")}</div>
+                <div>{pomodoro.endTime.format("LLL")}</div>
             </div>
         )}
     </div>

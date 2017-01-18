@@ -51,8 +51,8 @@ class Store {
 
     @action createWorkingPomodoro() {
         const id = uuid.v4();
-        const startTime = moment().subtract(this.workSessionSeconds, 'seconds');
-        const endTime = moment();
+        const startTime = (moment().unix() - this.workSessionSeconds),
+        const endTime = moment().unix();
         const category = '';
         const project = '';
         const task = '';
@@ -68,8 +68,16 @@ class Store {
         )
     }
 
-    @action savePomodoro(pomodoro: PomodoroModel) {
-        this.pomodoroMap.set(pomodoro.id, pomodoro);
+    @action savePomodoro = async(pomodoro: PomodoroModel) => {
+        // this.pomodoroMap.set(pomodoro.id, pomodoro);
+        // console.log(pomodoro);
+        let newPomodoro: any = await fetch(`${process.env.API_PREFIX}/pomodoro`, {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify(pomodoro),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        // console.log(newPomodoro);
     }
 
     @action getPomodoros = async () => {
@@ -77,8 +85,8 @@ class Store {
         runInAction(() => {
             pomodoros.forEach((pomodoro: any) => this.pomodoroMap.set(pomodoro.id, new PomodoroModel(
                 pomodoro.id,
-                pomodoro.startTime,
-                pomodoro.endTime,
+                moment.unix(pomodoro.startTime),
+                moment.unix(pomodoro.endTime),
                 pomodoro.category,
                 pomodoro.project,
                 pomodoro.task,

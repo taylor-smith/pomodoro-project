@@ -3,3 +3,4 @@ private
 public
 .vscode
 npm-debug.log
+src/server/.DS_Store
