@@ -11,4 +11,8 @@ export class PomodoroBusiness implements PomodoroBusiness {
     create (item: IPomodoroModel, callback: (error: any, result: any) => void) {
         this._pomodoroRepository.create(item, callback);
     }
+
+    getAll (callback: (error: any, result: any) => void) {
+        this._pomodoroRepository.getAll(callback)
+    }
 }

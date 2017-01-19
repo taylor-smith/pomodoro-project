@@ -11,17 +11,14 @@ app.use(bodyParser.json());
 
 
 app.get('/api/pomodoros', async (req, res) => {
-    const sql = new Sql();
     try {
-        await sql.open();
-        const rawPomodoros = await sql.all('SELECT * FROM pomodoros');
-        const pomodoros = models.deserializePomodoros(rawPomodoros);
-        const serializedPomodoros = models.serializePomodoros(pomodoros);
-        res.send(pomodoros);
-    } catch (err) {
-        res.status(500).send(JSON.stringify(err));
-    } finally {
-        sql.close();
+        const pomodoroBusiness = new PomodoroBusiness();
+        pomodoroBusiness.getAll((error, result) => {
+            error ? res.status(500).send(JSON.stringify(error)) : res.status(200).send(result);
+        })
+    } catch (e) {
+        console.log(e);
+        res.send({'error': 'error in your request'});
     }
 });
 
@@ -30,7 +27,7 @@ app.post('/api/pomodoro', async (req, res) => {
         const pomodoro: models.IPomodoroModel = <models.IPomodoroModel>req.body;
         const pomodoroBusiness = new PomodoroBusiness();
         pomodoroBusiness.create(pomodoro, (error, result) => {
-            error ? res.status(500).send(JSON.stringify(error)) : res.status(201).send(pomodoro);
+            error ? res.status(500).send(JSON.stringify(error)) : res.status(201).send(result);
         })
     } catch (e) {
         console.log(e);

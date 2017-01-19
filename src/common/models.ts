@@ -4,6 +4,8 @@ import moment from 'moment';
 export interface IEntityModel {
     id: string,
     create: (item: any, callback: any) => void,
+    getAll: (callback: any) => void,
+    // get: (item: any, callback: any) => void,
 }
 
 export interface IPomodoroModel extends IEntityModel {

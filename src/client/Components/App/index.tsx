@@ -17,8 +17,8 @@ export default observer(() =>
         {[...store.pomodoroMap.values()].map(pomodoro => 
             <div key={pomodoro.id}>
                 <div>{pomodoro.project}</div>
-                <div>{pomodoro.startTime.format("LLL")}</div>
-                <div>{pomodoro.endTime.format("LLL")}</div>
+                <div>{moment(pomodoro.startTime).format("LLL")}</div>
+                <div>{moment(pomodoro.endTime).format("LLL")}</div>
             </div>
         )}
     </div>

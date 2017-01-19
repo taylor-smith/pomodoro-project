@@ -51,8 +51,8 @@ class Store {
 
     @action createWorkingPomodoro() {
         const id = uuid.v4();
-        const startTime = (moment().unix() - this.workSessionSeconds),
-        const endTime = moment().unix();
+        const startTime = Date.now() - (this.workSessionSeconds * 1000);
+        const endTime = Date.now();
         const category = '';
         const project = '';
         const task = '';
@@ -85,8 +85,8 @@ class Store {
         runInAction(() => {
             pomodoros.forEach((pomodoro: any) => this.pomodoroMap.set(pomodoro.id, new PomodoroModel(
                 pomodoro.id,
-                moment.unix(pomodoro.startTime),
-                moment.unix(pomodoro.endTime),
+                pomodoro.startTime,
+                pomodoro.endTime,
                 pomodoro.category,
                 pomodoro.project,
                 pomodoro.task,
