@@ -7,14 +7,25 @@ import 'whatwg-fetch';
 
 class Store {
 
-    @observable timerValue = 0;
     @observable pomodoroMap = new Map();
     @observable timerType = '';
-    @observable workSessionSeconds = 3
+    @observable workSessionSeconds = 10
     @observable longBreakInterval = 3
-    @observable longBreakSeconds = 2
-    @observable shortBreakSeconds = 1
+    @observable longBreakSeconds = 7
+    @observable shortBreakSeconds = 5
     @observable tally = 0;
+    @observable timerValue = 0;
+    @computed get totalSeconds() {
+        switch (this.timerType) {
+            case 'workSession':
+                return this.workSessionSeconds;
+            case 'longBreak':
+                return this.longBreakSeconds;
+            case 'shortBreak':
+                return this.shortBreakSeconds;
+        }
+        return 0;
+    }
 
     @observable workingPomodoro: PomodoroModel | null = null;
 
@@ -35,7 +46,6 @@ class Store {
             this.savePomodoro(this.workingPomodoro);
             this.workingPomodoro = null;
         }
-
         if (this.tally % 2 === 0) {
             this.timerType = 'workSession';
             this.timerValue = this.workSessionSeconds;

@@ -1,6 +1,3 @@
-// const path = require('path');
-// const PROJECT_ROOT = __dirname;
-// const SRC_DIR = path.join(PROJECT_ROOT, client);
 const webpack = require('webpack');
 
 module.exports = {
@@ -11,14 +8,21 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     resolve: {
-        // alias: {
-        //     '~': SRC_DIR
-        // },
         extensions: ['.js', '.ts', '.tsx'],
         enforceExtension: false
     },
     module: {
         rules: [{
+            test: /\.css$/,
+            use: [{
+                loader: 'style-loader'
+            }, {
+                loader: 'css-loader',
+                options: {
+                    modules: true
+                }
+            }]
+        }, {
             test: /\.tsx?$/,
             use: 'ts-loader'
         }]
