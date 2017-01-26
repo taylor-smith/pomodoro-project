@@ -26,6 +26,18 @@ class Store {
         }
         return 0;
     }
+    
+    @computed get minutes() {
+        return Math.floor(this.timerValue / 60);
+    }
+
+    @computed get seconds() {
+        return Math.floor(this.timerValue - (this.minutes * 60));
+    }
+
+    @computed get timeDisplay() {
+        return this.seconds >= 10 ? `${this.minutes}:${this.seconds}` : `${this.minutes}:0${this.seconds}`
+    }
 
     @observable workingPomodoro: PomodoroModel | null = null;
 

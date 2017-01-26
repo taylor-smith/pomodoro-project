@@ -6,7 +6,7 @@ var styles = require('./styles.css');
 
 export default observer(() =>
     <div className={styles.timerDisplay}>
-        <div id={styles.cont} data-time={store.timerValue}>
+        <div id={styles.cont} data-time={store.timeDisplay}>
             <svg id={styles.svg} width="200" height="200" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <circle
                     r="90"
@@ -30,13 +30,5 @@ export default observer(() =>
                 </circle>
             </svg>
         </div>
-        
-        
-        
-        
-        
-        
-        <span>{store.timerValue !== 0 ? store.timerValue : ''}</span>
     </div>
-
 );
